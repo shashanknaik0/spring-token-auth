@@ -26,7 +26,8 @@ use UI to run gradle project or use below cammand
 ./gradlew bootRun
 </pre>
 
-step 4: visit the development server at http://127.0.0.1:8080 and use below api endpoints. Read <a href="API%20documentation.pdf">API documentation</a> for more information.
+step 4: development server will run at http://127.0.0.1:8080. Read <a href="API%20documentation.pdf">API documentation</a> for more information.<br>
+use postman to send the http requests.
 <pre>
 /signup - (POST) Add a new user to the platform. The user details will include fields like username, email, and password. 
 /login - (POST) Login to the page to genatrate auth token.
