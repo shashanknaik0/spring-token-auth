@@ -1,11 +1,11 @@
 package com.shashank.spring.token.auth.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.shashank.spring.token.auth.security.UserDetails;
 import com.shashank.spring.token.auth.user.model.User;
 import com.shashank.spring.token.auth.user.model.UserRepository;
 
@@ -24,11 +24,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public ResponseEntity<String> authenticate(String username, String password) {
+    public UserDetails authenticate(String username, String password) {
         User user = userRepository.findByUsername(username);
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
-            return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+            throw new BadCredentialsException("Invalid username or password");
         }
-        return ResponseEntity.ok("Logged in");
+        return new UserDetails(user.getId(), user.getUsername()); // UserDetails is a custom class representing user
+                                                                  // details
     }
 }
