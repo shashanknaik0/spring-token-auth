@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.JwtException;
@@ -15,13 +16,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtProvider {
 
-    private static final String SECRET_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNjg4NzQwMDUwLCJleHAiOjE2ODg4MjY0NTB9.MvtslvPGUOqD4LWutziU0ofNE8vx0vE92I1bq_4c7uo"; // Replace
-                                                                                                                                                                                  // with
-                                                                                                                                                                                  // your
-                                                                                                                                                                                  // own
-                                                                                                                                                                                  // secret
-                                                                                                                                                                                  // key
-    private static final long EXPIRATION_TIME = 86400000L; // 24 hours
+    @Value("${shashank.app.jwtSecret}")
+    private String SECRET_KEY;  
+    
+    @Value("${shashank.app.jwtExpirationMs}") // 24 hours
+    private int EXPIRATION_TIME; 
 
     public String generateToken(UserDetails userDetails) {
         Date now = new Date();
